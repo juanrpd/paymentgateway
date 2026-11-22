@@ -1,12 +1,14 @@
 {
-  "priority": 2,
+  "priority": 1,
   "request": {
     "method": "POST",
     "urlPath": "/gateway/v1/charges",
     "bodyPatterns": [
       {
-        "matchesJsonPath": "$.paymentMethodToken",
-        "equalTo": "tok_declined_0002"
+        "matchesJsonPath": {
+          "expression": "$.paymentMethodToken",
+          "equalTo": "tok_declined_0002"
+        }
       }
     ]
   },

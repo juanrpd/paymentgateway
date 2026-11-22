@@ -5,8 +5,10 @@
     "urlPath": "/gateway/v1/charges",
     "bodyPatterns": [
       {
-        "matchesJsonPath": "$.paymentMethodToken",
-        "equalTo": "tok_timeout_9999"
+        "matchesJsonPath": {
+          "expression": "$.paymentMethodToken",
+          "equalTo": "tok_timeout_9999"
+        }
       }
     ]
   },

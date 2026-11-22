@@ -34,6 +34,7 @@ public class WebhookSqsConsumer {
 
     @Scheduled(fixedDelay = 100)
     public void pollMessages() {
+        log.info("SQS receiveMessage....");
         List<Message> messages = sqsClient.receiveMessage(ReceiveMessageRequest.builder()
                 .queueUrl(queueUrl)
                 .maxNumberOfMessages(10)

@@ -39,6 +39,7 @@ public class ReconciliationScheduler {
 
     @Scheduled(fixedDelay = 10_000)
     public void reconcileTransientAttempts() {
+        log.info("$$$ reconcileTransientAttempts ..... ");
         OffsetDateTime olderThan = OffsetDateTime.now().minusSeconds(60);
         List<PaymentAttemptEntity> candidates = paymentAttemptRepository.findCandidatesForReconciliation(
                 TRANSIENT_STATUSES,
