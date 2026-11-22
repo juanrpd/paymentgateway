@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: paymentgateway
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payments_db
+    username: postgres
+    password: secret
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 2000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    locations: classpath:postgres/migration
+spring.cloud.aws:
+  region:
+    static: us-east-1
+  credentials:
+    access-key: ${AWS_ACCESS_KEY_ID:ASIGNAR_VALOR}
+    secret-key: ${AWS_SECRET_ACCESS_KEY:ASIGNAR_VALOR}
+aws:
+  region: ${AWS_REGION:us-east-1}
+  access-key-id: ${AWS_ACCESS_KEY_ID:ASIGNAR_VALOR}
+  secret-access-key: ${AWS_SECRET_ACCESS_KEY:ASIGNAR_VALOR}
+  sqs:
+    queue-url: ${AWS_SQS_QUEUE_URL:ASIGNAR_VALOR}
+gateway:
+  base-url: http://localhost:8089
+  connect-timeout-ms: 2000
+  read-timeout-ms: 3000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+  datadog:
+    metrics:
+      export:
+        api-key: ${DD_API_KEY:ASIGNAR_VALOR}
+        uri: https://api.datadoghq.com
+        step: 10s

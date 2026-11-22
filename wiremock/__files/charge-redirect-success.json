@@ -1,0 +1,5 @@
+{
+  "providerPaymentId": "pay_ext_99",
+  "redirectUrl": "https://pasarela.com/checkout/99",
+  "message": "Redirección requerida para completar autenticación"
+}

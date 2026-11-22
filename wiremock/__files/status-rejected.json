@@ -1,0 +1,5 @@
+{
+  "providerPaymentId": "pay_ext_100",
+  "status": "REJECTED",
+  "failureReason": "Rechazado por el banco emisor durante la conciliación"
+}

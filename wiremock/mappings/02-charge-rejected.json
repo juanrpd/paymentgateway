@@ -1,0 +1,20 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "POST",
+    "urlPath": "/gateway/v1/charges",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.paymentMethodToken",
+        "equalTo": "tok_declined_0002"
+      }
+    ]
+  },
+  "response": {
+    "status": 422,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "charge-rejected-card.json"
+  }
+}

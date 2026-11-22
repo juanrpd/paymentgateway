@@ -1,0 +1,52 @@
+services:
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: payments-postgres
+    environment:
+      POSTGRES_DB: payments_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d payments_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  wiremock-gateway:
+    image: wiremock/wiremock:3.9.1
+    container_name: payments-wiremock
+    ports:
+      - "8089:8080"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+      - ./wiremock/__files:/home/wiremock/__files
+    command: ["--verbose", "--global-response-templating"]
+
+  paymentgateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: payments-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      wiremock-gateway:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/payments_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: secret
+      GATEWAY_BASE_URL: http://wiremock-gateway:8080
+      AWS_ACCESS_KEY_ID: ASIGNAR_VALOR
+      AWS_SECRET_ACCESS_KEY: ASIGNAR_VALOR
+      AWS_REGION: us-east-1
+      AWS_SQS_QUEUE_URL: ASIGNAR_VALOR
+
+volumes:
+  postgres_data:

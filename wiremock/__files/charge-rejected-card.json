@@ -1,0 +1,5 @@
+{
+  "providerPaymentId": "pay_ext_100",
+  "redirectUrl": null,
+  "message": "Tarjeta rechazada por fondos insuficientes o datos inválidos"
+}
